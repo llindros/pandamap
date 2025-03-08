@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Hello World</title>
+
+    
+    <!-- JavaScript Libraries-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/js/foundation.js"></script>
+
+  
+    <!-- CSS Links -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.4.3/css/foundation.min.css" rel="stylesheet" />
+    <link href="style.css" rel="stylesheet" />
+    
+
+    
+</head>
+
+<body>
+
+    <div class="site-header">
+        <strong class="site-title">Panda Diplomacy</strong>
+    </div>
+
+    <div class="site-main grid-x has-content-open">
+        
+        <div class="map-container cell medium-auto large-order-2">
+             <iframe src="pandas.html" title="Map"></iframe>
+
+        </div>
+
+        <!--  Sidebar panel  -->
+        <div class="sidebar cell medium-3 large-2 large-order-1 show-for-medium">
+            <h5>About this map</h5>
+            This is a map of (almost) every Zoo that China has loaned pandas to since the start of "panda diplomacy" in the early 1980s. 
+            Clicking on  a panda icon will show you every panda they've hosted.
+
+            <hr />
+
+        </div>
+
+        <div class="content-close-button-container">
+            <a href="#" class="content-close-button">×</a>
+        </div>
+        
+    
+
+    </div>
+
+    <script>
+       
+        $(document).ready(function() {
+
+            $('.content-close-button').click(function() {
+                $('.content-close-button').hide();
+                $('.content').hide();
+                $('.site-main').removeClass('has-content-open')
+
+                // When the map is resized programmatically, window resize must be triggered so that the map renders in the newly allotted space.
+                window.dispatchEvent(new Event('resize'));
+
+            });
+
+            $('.content-link').click(function() {
+                $('.content-close-button').show();
+                $('.content').show();
+                $('.site-main').addClass('has-content-open')
+                window.dispatchEvent(new Event('resize'));
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>
