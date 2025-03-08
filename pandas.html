@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Display a map with a custom style</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.4.0/mapbox-gl.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/xrange.js"></script>
+
+<style>
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 100%; }
+.icon-image{width:50px;}
+
+.timeline {
+    width:100%; height:35%;
+    position: fixed;
+    bottom:0;
+}
+
+.back {
+    display: block; /* displays over the map */
+            position: fixed; /* displays over the map */
+            top: 2; 
+            z-index: 999999;
+            width: 30%;
+            height: 40px;
+            padding: 10px;
+            border: 3px solid black;
+}
+
+</style>
+</head>
+<body>
+ <button id='back'>Back</button>
+ <div id="map"></div>
+
+ <div id="timeline" class="timeline"></div>
+
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1IjoibGlseWxpbmQiLCJhIjoiY2x3amdzanBmMTJidzJqbWpnYzlkZnAyZyJ9.csn_7z53ZtqByVzYMZRVuA';
+    
+    
+    var map = new mapboxgl.Map({
+        container: 'map', // container ID
+        style: 'mapbox://styles/lilylind/clwjhkej600r601q1hdwj8vjw', //style link
+        center: [0,0], // starting position
+        zoom: 1, // starting zoom
+    });
+
+
+    //GeoJSON info for Zoos
+    var Zoos = {
+        "type": "FeatureCollection",
+        "name": "Zoos",
+        "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+        "features": [
+        {"type":"Feature","geometry":{"type":"Point","coordinates":[13.3463965,52.5132622,0]},"properties":{"name":"Berlin Zoo","description":"The Berlin Zoo hosts the oldest panda.","image_url":"https://www.zoo-berlin.de/fileadmin/user_upload/Header_Pandagarden.jpg","source_text":"Zoo Berlin","source_url":"https://www.zoo-berlin.de/en/animals/panda-garden","icon":"panda","filter":"current"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[1.35309,47.2476534,0]},"properties":{"name":"ZooParc de Beauval","description":"This is another zoo.","image_url":"https://cdn-images.zoobeauval.com/YtejtULyRFVxqrrTGTEYM22WZ7Q=/2400x1425/https%3A%2F%2Fs3.eu-west-3.amazonaws.com%2Fimages.zoobeauval.com%2F2020%2F06%2Fparrainage-1-5ee0ed7869fbf.jpg","source_text":"ZooParc de Beauval","source_url":"https://www.zoobeauval.com/en/zooparc/animals/giant-panda","icon":"panda","filter":"current"}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[3.8873876,50.5850028,0]},"properties":{"name":"Pairi Diaza","description":"","image_url":"","source_text":"","source_url":"","icon":"panda","filter":""}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[-3.2685447,55.9423744,0]},"properties":{"name":"Edinburgh Zoo","description":"","image_url":"","source_text":"","source_url":"","icon":"panda","filter":""}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[16.3028435,48.1820666,0]},"properties":{"name":"Tiergarten Schönbrunn","description":"","image_url":"","source_text":"","source_url":"","icon":"panda","filter":""}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[24.1850654,62.5363251,0]},"properties":{"name":"Ähtäri Zoo","description":"","image_url":"","source_text":"","source_url":"","icon":"panda","filter":""}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[-3.7608442,40.409189,0]},"properties":{"name":"Zoo Aquarium","description":"","image_url":"","source_text":"","source_url":"","icon":"panda","filter":""}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[12.5234459,55.6716899,0]},"properties":{"name":"Copenhagen Zoo","description":"","image_url":"","source_text":"","source_url":"","icon":"panda","filter":""}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[5.5909509,51.9556998,0]},"properties":{"name":"Ouwehands Dierenpark","description":"","image_url":"","source_text":"","source_url":"","icon":"panda","filter":""}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[37.5766016,55.7631648,0]},"properties":{"name":"Moscow Zoo","description":"","image_url":"","source_text":"","source_url":"","icon":"panda","filter":""}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[138.606471,-34.9147027,0]},"properties":{"name":"Adelaide Zoo","description":"","image_url":"","source_text":"","source_url":"","icon":"panda","filter":""}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[127.2028654,37.2929093,0]},"properties":{"name":"Everland","description":"","image_url":"","source_text":"","source_url":"","icon":"panda","filter":""}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[139.7729492,35.7159369,0]},"properties":{"name":"Ueno Zoo","description":"","image_url":"","source_text":"","source_url":"","icon":"panda","filter":""}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[101.758779,3.2101774,0]},"properties":{"name":"Zoo Negara","description":"","image_url":"","source_text":"","source_url":"","icon":"panda","filter":""}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[-84.3716518,33.7337275,0]},"properties":{"name":"Zoo Atlanta","description":"","image_url":"","source_text":"","source_url":"","icon":"panda","filter":""}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[-89.9943446,35.149959,0]},"properties":{"name":"Memphis Zoo","description":"","image_url":"","source_text":"","source_url":"","icon":"panda","filter":""}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[-77.0495628,38.9295356,0]},"properties":{"name":"Smithsonian Zoo","description":"","image_url":"","source_text":"","source_url":"","icon":"panda","filter":""}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[-117.150968,32.7359996,0]},"properties":{"name":"San Diego Zoo","description":"","image_url":"","source_text":"","source_url":"","icon":"panda","filter":""}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[-99.1894399,19.4231966,0]},"properties":{"name":"Zoológico de Chapultepec","description":"","image_url":"","source_text":"","source_url":"","icon":"panda","filter":""}}
+        ]
+    }
+
+
+    //JSON info for pandas
+    var pandas = {
+        "type": "FeatureCollection",
+        "name": "Pandas",
+       
+          "features": [
+            {
+             "panda_id": 1,
+             "name": "Bao Bao",
+             "gender": "m",
+             "zoo": "Berlin Zoo",
+             "zoo_id": 1,
+             "origin_loc": 0,
+             "alive": 0,
+             "death_loc": 1,
+             "birth_year": 1978,
+             "loan1_start": 1980,
+             "loan1_end": "",
+             "death_year": 2012
+            },
+            {
+                "panda_id": 2,
+                "name": "Tjen Tjen",
+                "gender": "f",
+                "zoo": "Berlin Zoo",
+                "zoo_id": 1,
+                "origin_loc": 0,
+                "alive": 0,
+                "death_loc": 1,
+                "birth_year": 1978,
+                "loan1_start": 1980,
+                "loan1_end": "",
+                "death_year": 1984
+            },
+            {
+                "panda_id": 3,
+                "name": "Yan Yan",
+                "gender": "f",
+                "zoo": "Berlin Zoo",
+                "zoo_id": 1,
+                "origin_loc": 0,
+                "alive": 0,
+                "death_loc": 1,
+                "birth_year": 1985,
+                "loan1_start": 1995,
+                "loan1_end": "",
+                "death_year": 2007
+            },
+            {
+                "panda_id": 4,
+                "name": "Jiao Qing",
+                "gender": "m",
+                "zoo": "Berlin Zoo",
+                "zoo_id": 1,
+                "origin_loc": 0,
+                "alive": 1,
+                "death_loc": "",
+                "birth_year": 2010,
+                "loan1_start": 2017,
+                "loan1_end": "",
+                "death_year": ""
+            },
+            {
+                "panda_id": 5,
+                "name": "Meng Meng",
+                "gender": "f",
+                "zoo": "Berlin Zoo",
+                "zoo_id": 1,
+                "origin_loc": 0,
+                "alive": 1,
+                "death_loc": "",
+                "birth_year": 2013,
+                "loan1_start": 2017,
+                "loan1_end": "",
+                "death_year": ""
+            },
+            {
+                "panda_id": 6,
+                "name": "Meng Xiang",
+                "gender": "m",
+                "zoo": "Berlin Zoo",
+                "zoo_id": 1,
+                "origin_loc": 1,
+                "alive": 1,
+                "death_loc": "",
+                "birth_year": 2019,
+                "loan1_start": "",
+                "loan1_end": 2023,
+                "death_year": ""
+            },
+            {
+                "panda_id": 7,
+                "name": "Mengyuan",
+                "gender": "m",
+                "zoo": "Berlin Zoo",
+                "zoo_id": 1,
+                "origin_loc": 1,
+                "alive": 1,
+                "death_loc": "",
+                "birth_year": 2019,
+                "loan1_start": "",
+                "loan1_end": 2023,
+                "death_year": ""
+            },
+            {
+                "panda_id": 8,
+                "name": "Huan Huan",
+                "gender": "f",
+                "zoo": "ZooParc de Beauval",
+                "zoo_id": 3,
+                "origin_loc": 0,
+                "alive": 1,
+                "death_loc": "",
+                "birth_year": 2008,
+                "loan1_start": 2012,
+                "loan1_end": "",
+                "death_year": ""
+            }
+]
+    }
+
+
+
+ 
+    map.on('load', function () {
+          // Add a GeoJSON source containing place coordinates and information.
+    map.addSource('Zoos', {
+     'type': 'geojson',
+     'data': Zoos
+   });
+
+
+    // add a new layer using the points
+    var layerID = 'pandaLayer'; 
+        map.addLayer({
+        'id': 'pandaLayer',
+        'type': 'symbol',
+        'source': 'Zoos',
+        'layout': {
+            'icon-image': 'panda',
+            'icon-allow-overlap': true,
+            'icon-size':0.07,
+        },
+    });
+
+
+    // Create a popup, but don't add it to the map yet.
+         var popup = new mapboxgl.Popup({
+         closeButton: false,
+         closeOnClick: false
+     });
+     
+
+    // Add a popup on hover that shows the name of the Zoo
+            map.on('mouseenter', layerID, (e) => {
+                 var coordinates = e.features[0].geometry.coordinates.slice();
+                 var description = e.features[0].properties.name;
+
+                 map.getCanvas().style.cursor = 'pointer';
+
+                popup.setLngLat(coordinates) //coordinates were sliced two lines above
+                popup.setHTML(description) // the string in the description var is added to the popup here
+                popup.addTo(map);
+            });
+
+            map.on('mouseleave', layerID, function() {
+             map.getCanvas().style.cursor = '';
+             popup.remove();
+            });
+         
+            
+    });
+
+  // read a JSON file and return every feature with the zoo name
+  function getPandas(jsonObj, attribute) {
+    const featuresWithAttribute = [];
+
+    // Loop through each feature in the JSON object
+    for (const feature of jsonObj.features) {
+        console.log(feature.zoo)
+        // Check if the feature has the specified attribute
+        if (feature.zoo == attribute) {
+        // if (feature.properties && feature.properties[attribute]) {
+            // If the attribute exists, add the feature to the array
+            console.log("Added " + feature.name + " to the panda list")
+            featuresWithAttribute.push(feature);
+        }
+    }
+
+    console.log(featuresWithAttribute);
+    return featuresWithAttribute;
+    }
+
+    function extractNames(data) {
+    let names = [];
+    data.forEach(item => {
+        names.push(item.name);
+    });
+    return names;
+}
+
+
+function makePandaData(data) {
+  let formattedData = [];
+  data.forEach((item, index) => {
+    let newItem = {
+      x: item.birth_year,
+      x2: item.death_year || item.loan1_end,
+      y: index + 1 // Using the index + 1 as the ordinal order
+    };
+    formattedData.push(newItem);
+  });
+  return formattedData;
+}
+
+
+var zooName = "Berlin Zoo";
+var pandaList = [];
+
+
+  // Timeline
+  
+    map.on('click', 'pandaLayer', (e)  => {
+
+        map.flyTo({
+                center: e.features[0].geometry.coordinates.slice(), //new center.
+                zoom: 6,
+                speed: 3
+            });
+
+        zooName = e.features[0].properties.name;
+        pandaList = getPandas(pandas, zooName);
+
+        Highcharts.chart('timeline', {
+    chart: {
+        type: 'xrange'
+    },
+    title: {
+        text: zooName
+    },
+
+   /*  accessibility: {
+        point: {
+            descriptionFormat: '{add index 1}. {yCategory}, {x:%A %e %B %Y} ' +
+                'to {x2:%A %e %B %Y}.'
+        }
+    }, */
+
+    xAxis: {
+        type: 'date',
+    },
+    yAxis: {
+        title: {
+            text: 'PANDAS'
+        },
+        categories: extractNames(pandaList),
+        reversed: true
+    },
+    series: [{
+        borderColor:'gray',
+        pointWidth:20,
+
+
+        data: makePandaData(pandaList)
+    }],
+
+    dataLabels: {
+        enabled: true
+    }
+   /*  [{
+        name: 'Project 1',
+        // pointPadding: 0,
+        // groupPadding: 0,
+        borderColor: 'gray',
+        pointWidth: 20,
+        data: [{
+            x: Date.UTC(2014, 10, 21),
+            x2: Date.UTC(2014, 11, 2),
+            y: 0,
+            partialFill: 0.25
+        }, {
+            x: Date.UTC(2014, 11, 2),
+            x2: Date.UTC(2014, 11, 5),
+            y: 1
+        }, {
+            x: Date.UTC(2014, 11, 8),
+            x2: Date.UTC(2014, 11, 9),
+            y: 2
+        }, {
+            x: Date.UTC(2014, 11, 9),
+            x2: Date.UTC(2014, 11, 19),
+            y: 1
+        }, {
+            x: Date.UTC(2014, 11, 10),
+            x2: Date.UTC(2014, 11, 23),
+            y: 2
+        }],
+        dataLabels: {
+            enabled: true
+        }
+    }] */
+
+});
+    });
+
+
+
+</script>
+
+</body>
+</html>
