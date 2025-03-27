@@ -5,7 +5,9 @@ mapboxgl.accessToken = 'pk.eyJ1IjoibGlseWxpbmQiLCJhIjoiY2x3amdzanBmMTJidzJqbWpnY
         container: 'map', // container ID
         style: 'mapbox://styles/lilylind/clwjhkej600r601q1hdwj8vjw', //style link
         center: [0,0], // starting position
-        zoom: 1.3, // starting zoom
-        FontFaceSet: ['Lato']
+        zoom: 2, // starting zoom
+        minZoom: 2,
+        maxZoom: 5
+
     });
 
