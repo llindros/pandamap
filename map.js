@@ -11,3 +11,27 @@ mapboxgl.accessToken = 'pk.eyJ1IjoibGlseWxpbmQiLCJhIjoiY2x3amdzanBmMTJidzJqbWpnY
 
     });
 
+    document.addEventListener("DOMContentLoaded", () => {
+        const aboutLink = document.querySelector(".topnav a[href='#about']");
+        const popup = document.getElementById("aboutPopup");
+        const closeBtn = popup.querySelector(".close-btn");
+      
+        // Show the popup when the "About" link is clicked
+        aboutLink.addEventListener("click", (e) => {
+          e.preventDefault(); // Prevent default anchor behavior
+          popup.style.display = "block";
+        });
+      
+        // Hide the popup when the close button is clicked
+        closeBtn.addEventListener("click", () => {
+          popup.style.display = "none";
+        });
+      
+        // Hide the popup when clicking outside the popup content
+        window.addEventListener("click", (e) => {
+          if (e.target === popup) {
+            popup.style.display = "none";
+          }
+        });
+      });
+
