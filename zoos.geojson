@@ -1,0 +1,161 @@
+{
+    "type": "FeatureCollection",
+    "features": [
+   {
+     "type": "Feature",
+     "geometry": {
+        "type": "Point",
+        "coordinates":  [ 13.404954,52.520008 ]
+     },
+     "properties": {
+     "id":1,
+     "zoo_name":"Berlin Zoo",
+     "city_name":"Berlin",
+     "country_name":"Germany"
+     }
+   },
+   {
+     "type": "Feature",
+     "geometry": {
+        "type": "Point",
+        "coordinates":  [ 0.1278,51.5074 ]
+     },
+     "properties": {
+     "id":2,
+     "zoo_name":"London Zoo",
+     "city_name":"London",
+     "country_name":"England"
+     }
+   },
+   {
+     "type": "Feature",
+     "geometry": {
+        "type": "Point",
+        "coordinates":  [ 1.3725,47.2665 ]
+     },
+     "properties": {
+     "id":3,
+     "zoo_name":"ZooParc de Beauval",
+     "city_name":"Saint-Aignan-sur-Cher",
+     "country_name":"France"
+     }
+   },
+   {
+     "type": "Feature",
+     "geometry": {
+        "type": "Point",
+        "coordinates":  [ 3.8545,50.5994 ]
+     },
+     "properties": {
+     "id":4,
+     "zoo_name":"Pairi Daiza",
+     "city_name":"Brugelette",
+     "country_name":"Belgium"
+     }
+   },
+   {
+     "type": "Feature",
+     "geometry": {
+        "type": "Point",
+        "coordinates":  [ 3.1883,55.9533 ]
+     },
+     "properties": {
+     "id":5,
+     "zoo_name":"Edinburgh Zoo",
+     "city_name":"Edinburgh",
+     "country_name":"Scotland"
+     }
+   },
+   {
+     "type": "Feature",
+     "geometry": {
+        "type": "Point",
+        "coordinates":  [ 16.3713,48.2081 ]
+     },
+     "properties": {
+     "id":6,
+     "zoo_name":"Tiergarten Schönbrunn",
+     "city_name":"Vienna",
+     "country_name":"Austria"
+     }
+   },
+   {
+     "type": "Feature",
+     "geometry": {
+        "type": "Point",
+        "coordinates":  [ 24.0694,62.5502 ]
+     },
+     "properties": {
+     "id":7,
+     "zoo_name":"Ähtäri Zoo",
+     "city_name":"Ähtäri",
+     "country_name":"Finland"
+     }
+   },
+   {
+     "type": "Feature",
+     "geometry": {
+        "type": "Point",
+        "coordinates":  [ 3.7033,40.4167 ]
+     },
+     "properties": {
+     "id":8,
+     "zoo_name":"Zoo Madrid",
+     "city_name":"Madrid",
+     "country_name":"Spain"
+     }
+   },
+   {
+     "type": "Feature",
+     "geometry": {
+        "type": "Point",
+        "coordinates":  [ 12.5683,55.6761 ]
+     },
+     "properties": {
+     "id":9,
+     "zoo_name":"Copenhagen Zoo",
+     "city_name":"Copenhagen",
+     "country_name":"Denmark"
+     }
+   },
+   {
+     "type": "Feature",
+     "geometry": {
+        "type": "Point",
+        "coordinates":  [ 4.9041,52.3676 ]
+     },
+     "properties": {
+     "id":10,
+     "zoo_name":"Ouwehands Dierenpark",
+     "city_name":"Amsterdam",
+     "country_name":"Netherlands"
+     }
+   },
+   {
+     "type": "Feature",
+     "geometry": {
+        "type": "Point",
+        "coordinates":  [ 37.6173,55.7558 ]
+     },
+     "properties": {
+     "id":11,
+     "zoo_name":"Moscow Zoo",
+     "city_name":"Moscow",
+     "country_name":"Russia"
+     }
+   },
+   {
+     "type": "Feature",
+     "geometry": {
+        "type": "Point",
+        "coordinates":  [ 138.6007,34.9285 ]
+     },
+     "properties": {
+     "id":12,
+     "zoo_name":"Adelaide Zoo",
+     "city_name":"Adelaide",
+     "country_name":"Australia"
+     }
+   }
+ ]
+ }
