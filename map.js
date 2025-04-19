@@ -64,14 +64,43 @@ map.on('load', () => {
                     ['linear'], // Linear interpolation
                     ['zoom'], // Based on the zoom level
                     2, 0.1, // At zoom level 2, icon size is 0.1
-                    5, 0.3, // At zoom level 5, icon size is 0.3
-                    10, 0.6 // At zoom level 10, icon size is 0.6
+                    5, 0.1, // At zoom level 5, icon size is 0.3
+                    10, 0.1 // At zoom level 10, icon size is 0.6
                 ],
                 'icon-anchor': 'center' // Anchor the icon at its center
             }
         });
 
         console.log('Zoos layer with dynamic icon size added successfully!');
+    });
+
+    // Add hover interaction to display GeoJSON info
+    const popup = new mapboxgl.Popup({
+        closeButton: false,
+        closeOnClick: false
+    });
+
+    map.on('mouseenter', 'zoos-layer', (e) => {
+        // Ensure there are features under the cursor
+        if (e.features && e.features.length > 0) {
+            map.getCanvas().style.cursor = 'pointer';
+    
+            const properties = e.features[0].properties;
+    
+            popup
+                .setLngLat(e.lngLat)
+                .setHTML(`<strong>${properties.zoo_name}</strong><br>${properties.country_name}`)
+                .addTo(map);
+        }
+    });
+    
+
+    map.on('mouseleave', 'zoos-layer', () => {
+        // Reset the cursor
+        map.getCanvas().style.cursor = '';
+
+        // Remove the popup
+        popup.remove();
     });
 });
 
