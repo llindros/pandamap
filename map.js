@@ -50,7 +50,7 @@ map.on('load', () => {
         if (error) throw error;
 
         // Add the image to the map's style
-        map.addImage('panda-icon', image);
+        map.addImage('pandaicon', image);
 
         // Add a layer to display the points with the panda icon
         map.addLayer({
@@ -58,16 +58,18 @@ map.on('load', () => {
             type: 'symbol', // Use a symbol layer for icons
             source: 'zoos',
             layout: {
-                'icon-image': 'panda-icon', // Reference the added image
+                'icon-image': 'pandaicon', // Reference the added image
                 'icon-size': [
-                    'interpolate', // Use interpolation for smooth scaling
+                    0.1
+                    /* 'interpolate', // Use interpolation for smooth scaling
                     ['linear'], // Linear interpolation
                     ['zoom'], // Based on the zoom level
-                    2, 0.1, // At zoom level 2, icon size is 0.1
-                    5, 0.1, // At zoom level 5, icon size is 0.3
-                    10, 0.1 // At zoom level 10, icon size is 0.6
+                    2, 0.05, // At zoom level 2, icon size is 0.1
+                    5, 0.07, // At zoom level 5, icon size is 0.3
+                    10, 0.09 // At zoom level 10, icon size is 0.6 */
                 ],
-                'icon-anchor': 'center' // Anchor the icon at its center
+                'icon-anchor': 'center', // Anchor the icon at its center
+                'icon-rotate': '180'
             }
         });
 
